@@ -28,7 +28,8 @@ class AuthService {
           password: password,
           address: '',
           type: '',
-          token: '');
+          token: '',
+          cart: []);
 
       http.Response res = await http.post(Uri.parse('$uri/api/signup'),
           body: user.toJson(),
@@ -117,6 +118,7 @@ class AuthService {
       }
     } catch (e) {
       showSnackBar(context, e.toString());
+      print(e.toString());
     }
   }
 }

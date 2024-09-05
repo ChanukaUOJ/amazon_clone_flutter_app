@@ -1,4 +1,5 @@
 import 'package:amazon_clone_flutter/constants/global_variables.dart';
+import 'package:amazon_clone_flutter/features/home/screens/category_deals_screen.dart';
 import 'package:flutter/material.dart';
 
 class TopCategories extends StatefulWidget {
@@ -9,6 +10,11 @@ class TopCategories extends StatefulWidget {
 }
 
 class _TopCategoriesState extends State<TopCategories> {
+  void navigateToCategoryPage(BuildContext context, String category) {
+    Navigator.pushNamed(context, CategoryDealsScreen.routeName,
+        arguments: category);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -20,14 +26,18 @@ class _TopCategoriesState extends State<TopCategories> {
         itemBuilder: (context, index) {
           return Column(
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: ClipOval(
-                  child: Image.asset(
-                    GlobalVariables.categoryImages[index]['image']!,
-                    fit: BoxFit.cover,
-                    height: 40,
-                    width: 40,
+              GestureDetector(
+                onTap: () => navigateToCategoryPage(
+                    context, GlobalVariables.categoryImages[index]['title']!),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: ClipOval(
+                    child: Image.asset(
+                      GlobalVariables.categoryImages[index]['image']!,
+                      fit: BoxFit.cover,
+                      height: 40,
+                      width: 40,
+                    ),
                   ),
                 ),
               ),

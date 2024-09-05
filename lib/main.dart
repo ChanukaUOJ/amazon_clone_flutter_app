@@ -1,5 +1,6 @@
 import 'package:amazon_clone_flutter/common/widget/bottom_bar.dart';
 import 'package:amazon_clone_flutter/constants/global_variables.dart';
+import 'package:amazon_clone_flutter/features/admin/screens/admin_screen.dart';
 import 'package:amazon_clone_flutter/features/auth/screens/auth_screen.dart';
 import 'package:amazon_clone_flutter/features/services/auth_service.dart';
 import 'package:amazon_clone_flutter/provider/user_provider.dart';
@@ -42,6 +43,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Amazon Clone',
       theme: ThemeData(
         scaffoldBackgroundColor: GlobalVariables.backgroundColor,
@@ -55,7 +57,9 @@ class _MyAppState extends State<MyApp> {
       ),
       onGenerateRoute: ((routeSettings) => generateRoute(routeSettings)),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const BottomBar()
+          ? Provider.of<UserProvider>(context).user.type == 'user'
+              ? const BottomBar()
+              : const AdminScreen()
           : const AuthScreen(),
     );
   }

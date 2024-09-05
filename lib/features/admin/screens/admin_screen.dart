@@ -1,28 +1,27 @@
-import 'package:amazon_clone_flutter/constants/global_variables.dart';
-import 'package:amazon_clone_flutter/features/account/screens/account_screen.dart';
-import 'package:amazon_clone_flutter/features/home/screens/home_screen.dart';
-import 'package:amazon_clone_flutter/provider/user_provider.dart';
+import 'package:amazon_clone_flutter/features/admin/screens/posts_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:badges/badges.dart' as badges;
-import 'package:provider/provider.dart';
+import '../../../constants/global_variables.dart';
 
-class BottomBar extends StatefulWidget {
-  static const String routeName = '/actual-home';
-  const BottomBar({super.key});
+class AdminScreen extends StatefulWidget {
+  const AdminScreen({super.key});
 
   @override
-  State<BottomBar> createState() => _BottomBarState();
+  State<AdminScreen> createState() => _AdminScreenState();
 }
 
-class _BottomBarState extends State<BottomBar> {
+class _AdminScreenState extends State<AdminScreen> {
   int _page = 0;
   double bottomBarWidth = 42;
   double bottomBarBorderWidth = 5;
 
   List<Widget> pages = [
-    const HomeScreen(),
-    const AccountScreen(),
-    const Center(child: Text("Cart Page")),
+    const PostsScreen(),
+    const Center(
+      child: Text("Analatics Page"),
+    ),
+    const Center(
+      child: Text("Orders page"),
+    ),
   ];
 
   void updatePage(int page) {
@@ -33,8 +32,37 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    final userCartLen = context.watch<UserProvider>().user.cart.length;
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(50),
+        child: AppBar(
+          flexibleSpace: Container(
+            decoration:
+                const BoxDecoration(gradient: GlobalVariables.appBarGradient),
+          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                alignment: Alignment.topLeft,
+                child: Image.asset(
+                  'assets/images/amazon_in.png',
+                  width: 120,
+                  height: 45,
+                  color: Colors.black,
+                ),
+              ),
+              const Text(
+                'Admin',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 24),
+              )
+            ],
+          ),
+        ),
+      ),
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
@@ -44,7 +72,7 @@ class _BottomBarState extends State<BottomBar> {
         iconSize: 28,
         onTap: updatePage,
         items: [
-          //home
+          //posts
           BottomNavigationBarItem(
             icon: Container(
               width: bottomBarWidth,
@@ -62,7 +90,7 @@ class _BottomBarState extends State<BottomBar> {
             ),
             label: '',
           ),
-          //account
+          //analatics
           BottomNavigationBarItem(
             icon: Container(
               width: bottomBarWidth,
@@ -76,11 +104,11 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
-              child: const Icon(Icons.person_outline_outlined),
+              child: const Icon(Icons.analytics_outlined),
             ),
             label: '',
           ),
-          //cart
+          //orders
           BottomNavigationBarItem(
             icon: Container(
               width: bottomBarWidth,
@@ -94,17 +122,10 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
-              child: badges.Badge(
-                badgeContent: Text(userCartLen.toString()),
-                badgeStyle: const badges.BadgeStyle(
-                  badgeColor: Colors.white,
-                  elevation: 0,
-                ),
-                child: const Icon(Icons.shopping_cart_outlined),
-              ),
+              child: const Icon(Icons.all_inbox_outlined),
             ),
             label: '',
-          )
+          ),
         ],
       ),
     );

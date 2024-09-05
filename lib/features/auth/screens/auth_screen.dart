@@ -3,9 +3,6 @@ import 'package:amazon_clone_flutter/common/widget/custom_texxtfield.dart';
 import 'package:amazon_clone_flutter/constants/global_variables.dart';
 import 'package:amazon_clone_flutter/features/services/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../../provider/user_provider.dart';
 
 enum Auth {
   signin,
@@ -62,11 +59,6 @@ class _AuthScreenState extends State<AuthScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Text(Provider.of<UserProvider>(context)
-                .user
-                .token
-                .isEmpty
-                .toString()),
             const Text(
               "Welcome",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
